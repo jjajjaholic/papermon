@@ -1,30 +1,17 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
-import 'package:flutter/material.dart';
+import 'package:flame/game.dart'; // GameWidget을 위해 필요합니다
 import 'package:flutter_test/flutter_test.dart';
-
 import 'package:papermon/main.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  testWidgets('Papermon game load test', (WidgetTester tester) async {
+    // PaperMonGame을 GameWidget으로 감싸서 빌드합니다.
+    await tester.pumpWidget(
+      GameWidget(
+        game: PaperMonGame(),
+      ),
+    );
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
-
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    // 게임 위젯이 정상적으로 화면에 떴는지 확인합니다.
+    expect(find.byType(GameWidget<PaperMonGame>), findsOneWidget);
   });
 }
